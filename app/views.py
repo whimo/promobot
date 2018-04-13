@@ -1,9 +1,10 @@
-from . import app
+from . import app, s3
 from flask import render_template, redirect, url_for, flash, request, abort
 from .models import Fit
 from .forms import DataForm, FitSearchForm
 from uuid import uuid4
-
+from os import path
+import pandas
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -12,6 +13,20 @@ def index():
 
     if request.form.get('data-submit') == 'Upload file':
         if fileform.validate_on_submit():
+            real_file = fileform.file_data.data
+            ext = real_file.filename.split('.')[-1]
+            
+            if ext in ['xls', 'xlsx']:
+                csv = pandas.read_excel(real_file.stream).to_csv()
+            
+            elif ext in ['csv']:
+                csv = real_file.stream.read()
+
+            else:
+                flash('Unrecognized document notation')
+                return redirect(url_for('index'))
+            
+            s3.put_object(Body=csv, Bucket='just-a-name', Key='csv/' + str(uuid4()))
             flash('Successfully uploaded your fit!')
             return redirect(url_for('index'))
         else:
