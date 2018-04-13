@@ -19,10 +19,10 @@ def show_fit(id):
     fileform = DataForm()
     searchform = FitSearchForm()
 
-    if fileform.validate_on_submit():
+    if fileform.data_submit.data and fileform.validate_on_submit():
         return 'file sent'
 
-    elif searchform.validate_on_submit():
+    elif searchform.fit_search_submit.data and searchform.validate_on_submit():
         return redirect(url_for('show_fit', id=searchform.fit_id))
 
     return render_template(
