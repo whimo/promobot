@@ -5,12 +5,9 @@ from wtforms import IntegerField, SubmitField
 
 class DataForm(FlaskForm):
     file_data = FileField(validators=[FileRequired()])
-    data_submit = SubmitField()
-
 
 class FitSearchForm(FlaskForm):
     fit_id = IntegerField()
-    fit_search_submit = SubmitField()
 
 
 _categories = ['Shave Prep',
