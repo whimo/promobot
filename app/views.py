@@ -10,11 +10,22 @@ def index():
     fileform = DataForm()
     searchform = FitSearchForm()
 
-    if request.form.get('data-submit') == 'Upload file' and fileform.validate_on_submit():
-        flash('Successfully uploaded your fit!')
-        return redirect(url_for('index'))
-    elif request.form.get('data-submit') == 'Search' and searchform.validate_on_submit():
-        return redirect(url_for('show_fit', id=searchform.fit_id.data))
+    if request.form.get('data-submit') == 'Upload file':
+        if fileform.validate_on_submit():
+            flash('Successfully uploaded your fit!')
+            return redirect(url_for('index'))
+        else:
+            for _, err_list in fileform.errors.items():
+                for err in err_list:
+                    flash('New Fit - ' + err, 'error')
+
+    elif request.form.get('data-submit') == 'Search':
+        if searchform.validate_on_submit():
+            return redirect(url_for('show_fit', id=searchform.fit_id.data))
+        else:
+            for _, err_list in searchform.errors.items():
+                for err in err_list:
+                    flash('Existing Fit - ' + err, 'error')
 
     return render_template('index.html',
                            fileform=fileform,

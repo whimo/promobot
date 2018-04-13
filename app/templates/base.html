@@ -22,7 +22,7 @@
             
             <div class="ui divider"></div>
             
-            {% with flashes = get_flashed_messages() %}
+            {% with flashes = get_flashed_messages(category_filter=["message"]) %}
 				{% if flashes %}
 					<div class="ui info message">
 						<div class="header">
@@ -30,6 +30,25 @@
 								New notifications
 							{% else %}
 								New notification
+							{% endif %}
+						</div>
+						<ul class="list">
+							{% for f in flashes %}
+								<li>{{ f }}</li>
+							{% endfor %}
+						</ul>
+					</div>
+				{% endif %}
+			{% endwith %}
+            
+            {% with flashes = get_flashed_messages(category_filter=["error"]) %}
+				{% if flashes %}
+					<div class="ui error message">
+						<div class="header">
+							{% if flashes|length > 1 %}
+								Errors
+							{% else %}
+								Error
 							{% endif %}
 						</div>
 						<ul class="list">
