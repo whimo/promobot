@@ -1,41 +1,54 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
+    <head>
+        <meta charset="UTF-8">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>        
-</head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>        
+    </head>
 
-<body>
-    <div class="ui container">
-        <div class="ui center aligned grid">
-            <div class="row">
-                <h1>LOGO</h1>
-            </div>
-        </div>
-        
-        <div class="ui stackable grid">
-            <div class="twelve wide column">
-                <h1>Create a new fit</h1>
+    <body>
+        <div class="ui container">
+            <div class="ui center aligned grid">
+                <div class="row">
+                    <h1>LOGO</h1>
+                </div>
             </div>
             
-            <div class="four wide column">
-                <div class="ui segment">
-                    <p>Already have an existing fit?</p>
-                    <form class="ui form" method="post">
-                        <div class="field">
-                            <input placeholder="Fit ID">
-                        </div>
-                    
-                        <div class="ui button">
-                            Submit
-                        </div>
-                    </form>
+            <div class="ui stackable grid">
+                <div class="ten wide column">
+                    <div class="ui segment">
+                        <h2>Create a new fit</h2>
+                        
+                        <form class="ui form" method="post">
+                            <div class="field">
+                                <input type="file">
+                            </div>
+                            
+                            <div class="ui button">
+                                Submit
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="six wide column">
+                    <div class="ui segment">
+                        <p>Already have an existing fit?</p>
+                        <form class="ui form" method="post">
+                            <div class="field">
+                                <input placeholder="Fit ID">
+                            </div>
+                        
+                            <div class="ui button">
+                                <i class="search icon"></i>
+                                Search
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
