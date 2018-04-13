@@ -7,5 +7,8 @@ class Fit(db.Model):
     filename = db.Column(db.Text)
 
     def status(self):
-        return 'OK'
+        if done:
+        	return 'OK'
+        else:
+        	return 'WAIT'
 
