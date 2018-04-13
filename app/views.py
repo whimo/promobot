@@ -5,7 +5,8 @@ from .models import Fit
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html',
+                            title='Main Page')
 
 @app.route('/fit/<id>')
 def show_fit(id):
@@ -17,6 +18,7 @@ def show_fit(id):
     return render_template(
                 'fit.html',
                 fit=fit,
+                title='Fit #'+str(fit.id)
             )
 
 @app.route('/418')
