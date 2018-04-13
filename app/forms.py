@@ -6,6 +6,7 @@ from wtforms import IntegerField
 class DataForm(FlaskForm):
     file_data = FileField(validators=[FileRequired()])
 
+
 class FitSearchForm(FlaskForm):
     fit_id = IntegerField()
 
