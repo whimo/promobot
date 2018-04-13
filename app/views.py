@@ -10,12 +10,10 @@ def index():
     searchform = FitSearchForm()
 
     if request.form.get('data-submit') == 'Upload file' and fileform.validate_on_submit():
-        return 'file sent'
+        flash('Successfully uploaded your fit!')
+        return redirect(url_for('index'))
     elif request.form.get('data-submit') == 'Search' and searchform.validate_on_submit():
         return redirect(url_for('show_fit', id=searchform.fit_id.data))
-    else:
-        print(fileform.errors)
-        print(searchform.errors)
 
     return render_template('index.html',
                            fileform=fileform,
