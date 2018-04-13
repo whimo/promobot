@@ -17,7 +17,7 @@ def show_fit(id):
 
     return render_template(
                 'fit.html',
-                fit=fit
+                fit=fit,
                 id=id
             )
 
