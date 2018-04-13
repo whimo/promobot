@@ -6,16 +6,6 @@ from .forms import DataForm, FitSearchForm
 
 @app.route('/')
 def index():
-    return render_template('index.html',
-                            title='Main Page')
-
-@app.route('/fit/<id>')
-def show_fit(id):
-    fit = Fit.query.filter_by(id=id).first()
-
-    if not fit:
-        abort(404)
-
     fileform = DataForm()
     searchform = FitSearchForm()
 
@@ -25,11 +15,21 @@ def show_fit(id):
     elif searchform.fit_search_submit.data and searchform.validate_on_submit():
         return redirect(url_for('show_fit', id=searchform.fit_id))
 
+    return render_template('index.html',
+                            fileform=fileform,
+                            searchform=searchform,
+                            title='Main Page')
+
+@app.route('/fit/<id>')
+def show_fit(id):
+    fit = Fit.query.filter_by(id=id).first()
+
+    if not fit:
+        abort(404)
+
     return render_template(
                 'fit.html',
                 fit=fit,
-                fileform=fileform,
-                searchform=searchform,
                 title='Fit #'+str(fit.id)
             )
 
