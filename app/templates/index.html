@@ -6,10 +6,12 @@
         <div class="ui segment">
             <h2>Create a new fit</h2>
             
-            <form class="ui form" method="post">
+            <form class="ui form" enctype="multipart/form-data" method="post">
+                {{ fileform.hidden_tag() }}
+            
                 <div class="field">
                     <label>Input data</label>
-                    <input type="file">
+                    {{ fileform.file_data() }}
                 </div>
                 
                 <div class="field">
@@ -23,10 +25,10 @@
                     </div>
                 </div>
                 
-                <div class="ui button">
+                <button class="ui button" name="data-submit" value="Upload file" type="submit">
                     <i class="upload icon"></i>
-                    Upload data
-                </div>
+                    <label>Upload file</label>
+                </button>
             </form>
         </div>
     </div>
@@ -35,14 +37,16 @@
         <div class="ui segment">
             <p>Already have an existing fit?</p>
             <form class="ui form" method="post">
+                {{ searchform.hidden_tag() }}
+                
                 <div class="field">
-                    <input placeholder="Fit ID">
+                    {{ searchform.fit_id() }}
                 </div>
-            
-                <div class="ui button">
+                
+                <button class="ui button" name="data-submit" value="Search" type="submit">
                     <i class="search icon"></i>
-                    Search
-                </div>
+                    <label>Search</label>
+                </button>
             </form>
         </div>
     </div>
