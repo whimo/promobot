@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="ui segment">
+    <h2>Information about fit #{{ fit.id }}</h2>
+    
+    {% if fit.done %}
+        <div class="ui two column grid">
+            <div class="one wide column">
+                <i class="big check icon"></i>
+            </div>
+            
+            <div class="column">
+                <h4>Your fit is ready!</h4>
+            </div>
+        </div>
+    {% else %}
+        <div class="ui two column grid">
+            <div class="one wide column">
+                <div class="ui active small inline loader"></div>
+            </div>
+            
+            <div class="column">
+                <h3>Please wait while your fit is being processed...</h3>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

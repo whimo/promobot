@@ -9,7 +9,6 @@ def index():
 
 @app.route('/fit/<id>')
 def show_fit(id):
-    
     fit = Fit.query.filter_by(id=id).first()
 
     if not fit:
@@ -17,8 +16,7 @@ def show_fit(id):
 
     return render_template(
                 'fit.html',
-                fit=fit
-                id=id
+                fit=fit,
             )
 
 @app.route('/418')
