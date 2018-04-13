@@ -1,5 +1,5 @@
 from . import app
-from flask import render_template
+from flask import render_template, redirect, url_for, flash
 from .models import Fit
 
 
@@ -21,5 +21,6 @@ def show_fit(id):
 
 @app.route('/418')
 def about():
-    return '418 I am teapot'
+    flash('418 I am a teapot')
+    return redirect(url_for('index'))
 
