@@ -1,10 +1,16 @@
+from app import db
+from .models import Fit
+
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired
-from wtforms import IntegerField, SubmitField, RadioField, DecimalField, SelectMultipleField, FieldList, FormField
+from wtforms import IntegerField, RadioField, DecimalField, SelectMultipleField, FieldList, FormField, ValidationError
 
+
+def DataForm_FileRequired():
+    return FileRequired(message='You need to upload input data')
 
 class DataForm(FlaskForm):
-    file_data = FileField(validators=[FileRequired()])
+    file_data = FileField(validators=[DataForm_FileRequired()])
 
 
 class FitSearchForm(FlaskForm):
@@ -56,7 +62,6 @@ _brands = ['Proglide',
            'Venus 2',
            'Venus 3',
            'Wipes']
-
 
 _promo_types = ['Display',
                 'Display&Feature',
