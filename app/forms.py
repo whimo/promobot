@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired
-from wtforms import IntegerField, SubmitField
+from wtforms import IntegerField
 
 
 class DataForm(FlaskForm):
