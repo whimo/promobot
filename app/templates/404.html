@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="ui center aligned grid">
+    <div class="column">
+        <i class="massive frown outline icon"></i>
+        <h2>404 Not Found</h2>
+        <p>Unfortunately, we were not able to find the page you requested.</p>
+        <a class="ui button" href="{{ url_for('index') }}">Return to the Main Page</a>
+    </div>
+</div>
+{% endblock %}
