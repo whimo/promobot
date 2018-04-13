@@ -18,6 +18,25 @@
                 </div>
             </div>
             
+            {% with flashes = get_flashed_messages() %}
+				{% if flashes %}
+					<div class="ui info message">
+						<div class="header">
+							{% if flashes|length > 1 %}
+								New notifications
+							{% else %}
+								New notification
+							{% endif %}
+						</div>
+						<ul class="list">
+							{% for f in flashes %}
+								<li>{{ f }}</li>
+							{% endfor %}
+						</ul>
+					</div>
+				{% endif %}
+			{% endwith %}
+            
             {% block content %}{% endblock %}
         </div>
     </body>
