@@ -6,23 +6,12 @@
         <div class="ui segment">
             <h2>Create a new fit</h2>
             
-            <form class="ui form" method="post">
+            <form class="ui form" enctype="multipart/form-data" method="post">
                 {{ fileform.hidden_tag() }}
             
                 <div class="field">
                     <label>Input data</label>
                     {{ fileform.file_data() }}
-                </div>
-                
-                <div class="field">
-                    <label>Additional data</label>
-                    <input placeholder="Some input">
-                </div>
-                
-                <div class="field">
-                    <div class="ui tiny icon button">
-                        <i class="plus icon"></i>
-                    </div>
                 </div>
                 
                 <button class="ui button" name="data-submit" value="Upload file" type="submit">
