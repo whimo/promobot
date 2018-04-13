@@ -78,4 +78,4 @@ class GetPredictForm(FlaskForm):
     category = RadioField(_categories[0], choices=[(cat, cat) for cat in _categories])
     num_of_entries = IntegerField()
     promo_budget = DecimalField()
-    per_entry_params = FieldList(FormField())
+    per_entry_params = FieldList(FormField(EntryForm), min_entries=1)
