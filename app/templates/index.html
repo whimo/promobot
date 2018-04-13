@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="ui stackable grid">
+    <div class="ten wide column">
+        <div class="ui segment">
+            <h2>Create a new fit</h2>
+            
+            <form class="ui form" method="post">
+                <div class="field">
+                    <label>Input data</label>
+                    <input type="file">
+                </div>
+                
+                <div class="field">
+                    <label>Additional data</label>
+                    <input placeholder="Some input">
+                </div>
+                
+                <div class="field">
+                    <div class="ui tiny icon button">
+                        <i class="plus icon"></i>
+                    </div>
+                </div>
+                
+                <div class="ui button">
+                    <i class="upload icon"></i>
+                    Upload data
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="six wide column">
+        <div class="ui segment">
+            <p>Already have an existing fit?</p>
+            <form class="ui form" method="post">
+                <div class="field">
+                    <input placeholder="Fit ID">
+                </div>
+            
+                <div class="ui button">
+                    <i class="search icon"></i>
+                    Search
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

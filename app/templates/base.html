@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>  
+
+        <link rel="stylesheet" href="../static/css/bottom-padded.css"/>
+        
+        <title>{{ title }}</title>
+    </head>
+
+    <body>
+        <div class="ui container">
+            <div class="ui center aligned grid">
+                <div class="row">
+                    <h1>LOGO</h1>
+                </div>
+            </div>
+            
+            {% with flashes = get_flashed_messages() %}
+				{% if flashes %}
+					<div class="ui info message">
+						<div class="header">
+							{% if flashes|length > 1 %}
+								New notifications
+							{% else %}
+								New notification
+							{% endif %}
+						</div>
+						<ul class="list">
+							{% for f in flashes %}
+								<li>{{ f }}</li>
+							{% endfor %}
+						</ul>
+					</div>
+				{% endif %}
+			{% endwith %}
+            
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>
+
