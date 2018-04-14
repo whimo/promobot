@@ -1,7 +1,7 @@
-from . import app, s3
+from . import app, s3, db
 from flask import render_template, redirect, url_for, flash, request, abort
 from .models import Fit
-from .forms import DataForm, FitSearchForm
+from .forms import DataForm, FitSearchForm, GetPredictForm
 from uuid import uuid4
 from os import path
 import pandas
@@ -26,9 +26,15 @@ def index():
                 flash('Unrecognized document notation')
                 return redirect(url_for('index'))
             
-            s3.put_object(Body=csv, Bucket='just-a-name', Key='csv/' + str(uuid4()))
+            fit = Fit(filename=str(uuid4()) + '.csv', done=False)
+            db.session.add(fit)
+            db.session.commnit()
+            
+            s3.put_object(Body=csv, Bucket='just-a-name', Key='csv/' + fit.filename)
+            
             flash('Successfully uploaded your fit!')
             return redirect(url_for('index'))
+
         else:
             for _, err_list in fileform.errors.items():
                 for err in err_list:
