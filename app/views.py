@@ -24,7 +24,7 @@ def index():
                 csv = real_file.stream.read()
 
             else:
-                flash('Unrecognized document notation')
+                flash('New Fit - Unrecognized document format', 'error')
                 return redirect(url_for('index'))
 
             fit = Fit(filename=str(uuid4()) + '.csv', done=False)
@@ -33,8 +33,8 @@ def index():
 
             s3.put_object(Body=csv, Bucket='***REMOVED***', Key='csv/' + fit.filename)
 
-            flash('Successfully uploaded your fit!')
-            return redirect(url_for('index'))
+            flash('Successfully uploaded your fit! ID: ' + str(fit.id))
+            return redirect(url_for('fit', id=fit.id))
 
         else:
             for _, err_list in fileform.errors.items():
