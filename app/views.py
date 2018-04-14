@@ -1,10 +1,25 @@
 from . import app, s3, db
 from flask import render_template, redirect, url_for, flash, request, abort
 from .models import Fit
-from .forms import DataForm, FitSearchForm, GetPredictForm, EntryForm
+from .forms import DataForm, FitSearchForm, GetPredictForm, EntryForm, _brands
 from uuid import uuid4
 from os import path
 import pandas
+from io import StringIO
+from threading import Thread
+from .core import PromoGenerator
+
+def save_and_fit(filename):
+    new_fit = Fit(filename='', done=False, error='')
+    gen = PromoGenerator()
+    data = s3.get_object('just-a-name', filename).read()
+    sio = StringIO(data.decode('utf-8'))
+    if gen.fit(pd.read_csv(sio)) == -1:
+        new_fit.error = gen.error
+
+
+    # Pickle PromoGenerator
+    #model = gen.
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -65,7 +80,16 @@ def show_fit(id):
     superform = GetPredictForm()
 
     if superform.validate_on_submit():
-        return 'OK!'
+        data = superform.data
+        data.pop('csrf_token')
+        data['promo_budget'] = float(data['promo_budget']) / 100.0
+        for ent in data['per_entry_params']:
+            ent.pop('csrf_token')
+            ent['sale_from'] = float(ent['sale_from']) / 100.0
+            ent['sale_to'] = float(ent['sale_to']) / 100.0
+            ent['repeat_count'] = int(ent['repeat_count'])
+
+        flash('ok')
     else:
         flash(superform.errors)
 
