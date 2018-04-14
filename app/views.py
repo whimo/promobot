@@ -1,10 +1,11 @@
 from . import app, s3, db
 from flask import render_template, redirect, url_for, flash, request, abort
 from .models import Fit
-from .forms import DataForm, FitSearchForm, GetPredictForm
+from .forms import DataForm, FitSearchForm, GetPredictForm, EntryForm
 from uuid import uuid4
 from os import path
 import pandas
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -61,6 +62,7 @@ def show_fit(id):
     if not fit:
         abort(404)
 
+    entry_form = EntryForm()
     superform = GetPredictForm()
 
     if superform.validate_on_submit():
@@ -69,6 +71,7 @@ def show_fit(id):
     return render_template(
         'fit.html',
         fit=fit,
+        entryform=entry_form,
         form=superform,
         title='Fit #' + str(fit.id)
     )
