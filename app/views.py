@@ -34,7 +34,7 @@ def index():
             s3.put_object(Body=csv, Bucket='just-a-name', Key='csv/' + fit.filename)
 
             flash('Successfully uploaded your fit! ID: ' + str(fit.id))
-            return redirect(url_for('fit', id=fit.id))
+            return redirect(url_for('show_fit', id=fit.id))
 
         else:
             for _, err_list in fileform.errors.items():
