@@ -108,3 +108,9 @@ ENV/
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# Training data and catboost files
+*.csv
+*.tsv
+learn/
+catboost_training.json
