@@ -7,6 +7,9 @@ $(document).ready(function(){
     const min_entries = 1;
     let current_entries = $append_div.children().length;
     
+    if (current_entries == min_entries)
+        $remove_button.addClass("disabled");
+    
     function update_form_count()
     {
         $("#form_count").text(current_entries);
