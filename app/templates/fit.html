@@ -10,6 +10,7 @@
         <div class="ui bottom-padded"></div>
         
         <script src="../static/js/dropdown-init.js"></script>
+        <script src="../static/js/dynamic-forms.js"></script>
         
         <form class="ui form">
             <div class="grouped fields">
@@ -44,55 +45,57 @@
                 <i class="minus icon"></i>
             </div>
             
-            {% for entryform in superform.per_entry_params %}
-                <div class="ui segment">
-                    <div class="field">
-                        <div class="two fields">
-                            <div class="field">
-                                <label>Sale from</label>
-                                <div class="ui right labeled input">
-                                    {{ entryform.sale_from() }}
-                                    <div class="ui basic label">
-                                        %
+            <div id="dynamic">
+                {% for entryform in superform.per_entry_params %}
+                    <div class="ui segment dynamically-repeated">
+                        <div class="field">
+                            <div class="two fields">
+                                <div class="field">
+                                    <label>Sale from</label>
+                                    <div class="ui right labeled input">
+                                        {{ entryform.sale_from() }}
+                                        <div class="ui basic label">
+                                            %
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="field">
-                                <label>Sale to</label>
-                                <div class="ui right labeled input">
-                                    {{ entryform.sale_to() }}
-                                    <div class="ui basic label">
-                                        %
+                                <div class="field">
+                                    <label>Sale to</label>
+                                    <div class="ui right labeled input">
+                                        {{ entryform.sale_to() }}
+                                        <div class="ui basic label">
+                                            %
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="grouped fields">
-                        <label>Promo type</label>
-                        {% for field in entryform.promo_type %}
-                            <div class="field">
-                                <div class="ui radio checkbox">
-                                    {{ field }}
-                                    {{ field.label }}
+                        
+                        <div class="grouped fields">
+                            <label>Promo type</label>
+                            {% for field in entryform.promo_type %}
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        {{ field }}
+                                        {{ field.label }}
+                                    </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="field">
+                            <label>Brand</label>
+                            {{ entryform.brand(class_="ui search dropdown") }}
+                        </div>
+                        
+                        <div class="field">
+                            <label>Repeat count</label>
+                            {{ entryform.repeat_count() }}
+                        </div>
                     </div>
-                    
-                    <div class="field">
-                        <label>Brand</label>
-                        {{ entryform.brand(class_="ui search dropdown") }}
-                    </div>
-                    
-                    <div class="field">
-                        <label>Repeat count</label>
-                        {{ entryform.repeat_count() }}
-                    </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </form>
         
         <div class="ui button">
