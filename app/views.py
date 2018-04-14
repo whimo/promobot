@@ -93,7 +93,11 @@ def show_fit(id):
     else:
         for _, err_list in superform.errors.items():
             for err in err_list:
-                flash(err, 'error')
+                if type(err) is dict:
+                    for _, derr in err:
+                        flash(derr, 'error')
+                else:
+                    flash(err, 'error')
 
     return render_template(
         'fit.html',
