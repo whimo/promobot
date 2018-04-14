@@ -71,6 +71,7 @@ def show_fit(id):
         'fit.html',
         fit=fit,
         superform=superform,
+        fit_status=fit.status(),
         title='Fit #' + str(fit.id)
     )
 
