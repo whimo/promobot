@@ -115,3 +115,54 @@ class PromoGenerator(object):
         self.data = data
 
         return True
+
+    def get_budget(self, category, periods_num):
+        info = self.data[self.data['category'] == category][['period_start_date', 'niv']]\
+            .sort_values('period_start_date', ascending=False).reset_index(drop=True)
+
+        time_range = periods_num * PERIOD_DURATION
+        thresh = info['period_start_date'][0] - time_range
+        budget = 0
+
+        for i in range(info.shape[0]):
+            budget += info.loc[i, 'niv']
+            if info.loc[i, 'period_start_date'] < thresh:
+                break
+
+        return budget
+
+    def get_niv_byitem(self, line, avg=3):
+        info = self.data[self.data['line_up'] == line][self.data['discount'] == 0][['period_start_date', 'niv', 'volume_it']]\
+            .sort_values('period_start_date', ascending=False).reset_index(drop=True)
+
+        time_range = avg * PERIOD_DURATION
+        thresh = info['period_start_date'][0] - time_range
+        budget = 0
+        volume = 0
+
+        for i in range(info.shape[0]):
+            budget += info.loc[i, 'niv']
+            volume += info.loc[i, 'volume_it']
+            if info.loc[i, 'period_start_date'] < thresh:
+                break
+
+        return float(budget) / volume
+
+    def get_base_volume(data, line, avg=3):
+        info = data[data['line_up'] == line][data['discount'] == 0][['period_start_date', 'volume_it']]\
+            .sort_values('period_start_date', ascending=False).reset_index(drop=True)
+
+        time_range = avg * PERIOD_DURATION
+        thresh = info['period_start_date'][0] - time_range
+        volume = 0
+        count = 0
+        for i in range(info.shape[0]):
+            volume += info.loc[i, 'volume_it']
+            count += 1
+            if info.loc[i, 'period_start_date'] < thresh:
+                break
+
+        return float(volume) / count
+
+    def estimate_roi(self, line, discount, base_volume, promo_volume):
+        return float(promo_volume - base_volume) / (discount * promo_volume)
