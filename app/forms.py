@@ -75,6 +75,8 @@ class EntryForm(FlaskForm):
     brand = SelectMultipleField(_brands[0], choices=[(b, b) for b in _brands])
     repeat_count = IntegerField()
 
+    
+
 
 class GetPredictForm(FlaskForm):
     category = RadioField(_categories[0], choices=[(cat, cat) for cat in _categories])
