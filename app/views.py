@@ -91,7 +91,9 @@ def show_fit(id):
 
         flash('ok')
     else:
-        flash(superform.errors)
+        for _, err_list in superform.errors.items():
+            for err in err_list:
+                flash(err, 'error')
 
     return render_template(
         'fit.html',
