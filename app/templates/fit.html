@@ -3,18 +3,113 @@
 {% block content %}
 <div class="ui segment">
     <h2>Information about fit #{{ fit.id }}</h2>
-    
-    {% if fit.done %}
+
+    {% if fit_status == 'OK' %}
         <h3><i class="check icon"></i>&nbsp;Your fit is ready!</h3>
-        
+
         <div class="ui bottom-padded"></div>
-        
-        <div class="ui button">
-            <i class="download icon"></i>
-            Download results
-        </div>
-    {% else %}
+
+        <script src="../static/js/dropdown-init.js"></script>
+        <script src="../static/js/dynamic-forms.js"></script>
+
+        <form class="ui form" method="post">
+            {{ superform.hidden_tag() }}
+            <div class="grouped fields">
+                <label>Category</label>
+                {% for field in superform.category %}
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            {{ field }}
+                            {{ field.label }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="field">
+                <label>Promo budget</label>
+                <div class="ui right labeled input">
+                    {{ superform.promo_budget }}
+                    <div class="ui basic label">
+                        %
+                    </div>
+                </div>
+            </div>
+
+            <div id="add_form" class="ui icon primary button field">
+                <i class="plus icon"></i>
+            </div>
+
+            <h2 id="form_count" style="display: inline;">{{ superform.per_entry_params.last_index + 1 }}</h2>
+            
+            <div id="remove_form" class="ui icon primary button field">
+                <i class="minus icon"></i>
+            </div>
+
+            <div id="dynamic">
+                {% for entryform in superform.per_entry_params %}
+                    <div class="ui segment dynamically-repeated">
+                        {{ entryform.hidden_tag() }}
+                        <div class="field">
+                            <div class="two fields">
+                                <div class="field">
+                                    <label>Sale from</label>
+                                    <div class="ui right labeled input">
+                                        {{ entryform.sale_from() }}
+                                        <div class="ui basic label">
+                                            %
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <label>Sale to</label>
+                                    <div class="ui right labeled input">
+                                        {{ entryform.sale_to() }}
+                                        <div class="ui basic label">
+                                            %
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grouped fields">
+                            <label>Promo type</label>
+                            {% for field in entryform.promo_type %}
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        {{ field }}
+                                        {{ field.label }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="field">
+                            <label>Line Up</label>
+                            {{ entryform.brand(class_="ui search dropdown") }}
+                        </div>
+
+                        <div class="field">
+                            <label>Repeat count</label>
+                            {{ entryform.repeat_count() }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="ui bottom-padded"></div>
+
+            <button class="ui button" type="submit">
+                <i class="upload icon"></i>
+                <label>Upload data</label>
+            </button>
+        </form>
+    {% elif fit_status == 'WAIT' %}
         <h3><i class="spinner loading icon"></i>&nbsp;Please wait while your fit is being processed...</h3>
+    {% else %}
+        <span style="color: red"> {{ fit_status }} </span>
     {% endif %}
 </div>
 {% endblock %}
