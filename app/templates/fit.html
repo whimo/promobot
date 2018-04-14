@@ -11,9 +11,21 @@
         
         <script src="../static/js/dropdown-init.js"></script>
         
-        {% for entryform in superform.per_entry_params %}
-            <div class="ui segment">
-                <form class="ui form">
+        <form class="ui form">
+            <div class="grouped fields">
+                <label>Category</label>
+                {% for field in superform.category %}
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            {{ field }}
+                            {{ field.label }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            {% for entryform in superform.per_entry_params %}
+                <div class="ui segment">
                     <div class="field">
                         <div class="two fields">
                             <div class="field">
@@ -59,9 +71,9 @@
                         <label>Repeat count</label>
                         {{ entryform.repeat_count() }}
                     </div>
-                </form>
-            </div>
-        {% endfor %}
+                </div>
+            {% endfor %}
+        </form>
         
         <div class="ui button">
             <i class="download icon"></i>
