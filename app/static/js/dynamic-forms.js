@@ -49,7 +49,7 @@ $(document).ready(function(){
         current_entries++;
         update_form_count();
         
-        $remove_button.prop('disabled', false);
+        $remove_button.removeClass("disabled");
     });
     
     $remove_button.click(function(){
@@ -60,7 +60,7 @@ $(document).ready(function(){
             update_form_count();
             
             if (current_entries == min_entries)
-                $remove_button.prop('disabled', true);
+                $remove_button.addClass("disabled");
         }
     });
 });
