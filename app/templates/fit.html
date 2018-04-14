@@ -3,15 +3,15 @@
 {% block content %}
 <div class="ui segment">
     <h2>Information about fit #{{ fit.id }}</h2>
-    
-    {% if fit.done %}
+
+    {% if fit_status == 'OK' %}
         <h3><i class="check icon"></i>&nbsp;Your fit is ready!</h3>
-        
+
         <div class="ui bottom-padded"></div>
-        
+
         <script src="../static/js/dropdown-init.js"></script>
         <script src="../static/js/dynamic-forms.js"></script>
-        
+
         <form class="ui form">
             <div class="grouped fields">
                 <label>Category</label>
@@ -24,7 +24,7 @@
                     </div>
                 {% endfor %}
             </div>
-            
+
             <div class="field">
                 <label>Promo budget</label>
                 <div class="ui right labeled input">
@@ -38,13 +38,13 @@
             <div class="ui icon primary button field">
                 <i class="plus icon"></i>
             </div>
-            
+
             <h2 style="display: inline;">&nbsp;{{ superform.per_entry_params.last_index + 1 }}&nbsp;</h2>
-            
+
             <div class="ui icon primary button field">
                 <i class="minus icon"></i>
             </div>
-            
+
             <div id="dynamic">
                 {% for entryform in superform.per_entry_params %}
                     <div class="ui segment dynamically-repeated">
@@ -71,7 +71,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="grouped fields">
                             <label>Promo type</label>
                             {% for field in entryform.promo_type %}
@@ -83,12 +83,12 @@
                                 </div>
                             {% endfor %}
                         </div>
-                        
+
                         <div class="field">
                             <label>Brand</label>
                             {{ entryform.brand(class_="ui search dropdown") }}
                         </div>
-                        
+
                         <div class="field">
                             <label>Repeat count</label>
                             {{ entryform.repeat_count() }}
@@ -97,13 +97,15 @@
                 {% endfor %}
             </div>
         </form>
-        
+
         <div class="ui button">
             <i class="download icon"></i>
             Download results
         </div>
-    {% else %}
+    {% elif fit_status == 'WAIT' %}
         <h3><i class="spinner loading icon"></i>&nbsp;Please wait while your fit is being processed...</h3>
+    {% else %}
+        <span style="color: red"> {{ fit_status }} </span>
     {% endif %}
 </div>
 {% endblock %}
