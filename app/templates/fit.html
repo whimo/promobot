@@ -26,9 +26,14 @@
             
             <div class="field">
                 <label>Promo budget</label>
-                {{ superform.promo_budget }}
+                <div class="ui right labeled input">
+                    {{ superform.promo_budget }}
+                    <div class="ui basic label">
+                        %
+                    </div>
+                </div>
             </div>
-            
+
             <div class="ui icon primary button field">
                 <i class="plus icon"></i>
             </div>
