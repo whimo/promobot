@@ -1,6 +1,3 @@
-from app import db
-from .models import Fit
-
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired
 from wtforms import IntegerField, RadioField, DecimalField, SelectMultipleField, FieldList, FormField, ValidationError
