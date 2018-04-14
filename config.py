@@ -5,7 +5,10 @@ port = 8080
 debug = True
 
 
-WTF_CSRF_ENABLED = False
+WTF_CSRF_ENABLED = True
+CSRF_ENABLED = True
+
+SECRET_KEY = 'totally secret key'
 
 UPLOAD_FOLDER = 'uploads'
 

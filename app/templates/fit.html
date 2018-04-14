@@ -13,6 +13,7 @@
         <script src="../static/js/dynamic-forms.js"></script>
 
         <form class="ui form" method="post">
+            {{ superform.hidden_tag() }}
             <div class="grouped fields">
                 <label>Category</label>
                 {% for field in superform.category %}
@@ -38,15 +39,16 @@
             <div id="add_form" class="ui icon primary button field">
                 <i class="plus icon"></i>
             </div>
-            
+
             <h2 id="form_count" style="display: inline;">{{ superform.per_entry_params.last_index + 1 }}</h2>
-            
+
             <div id="remove_form" class="ui icon primary button disabled field">
                 <i class="minus icon"></i>
             </div>
 
             <div id="dynamic">
                 {% for entryform in superform.per_entry_params %}
+                    {{ entryform.hidden_tag() }}
                     <div class="ui segment dynamically-repeated">
                         <div class="field">
                             <div class="two fields">
@@ -96,9 +98,9 @@
                     </div>
                 {% endfor %}
             </div>
-            
+
             <div class="ui bottom-padded"></div>
-            
+
             <button class="ui button" type="submit">
                 <i class="upload icon"></i>
                 <label>Upload data</label>
