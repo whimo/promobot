@@ -11,53 +11,57 @@
         
         <script src="../static/js/dropdown-init.js"></script>
         
-        <form class="ui form">
-            <div class="field">
-                <div class="two fields">
+        {% for entryform in superform.per_entry_params %}
+            <div class="ui segment">
+                <form class="ui form">
                     <div class="field">
-                        <label>Sale from</label>
-                        <div class="ui right labeled input">
-                            {{ entryform.sale_from() }}
-                            <div class="ui basic label">
-                                %
+                        <div class="two fields">
+                            <div class="field">
+                                <label>Sale from</label>
+                                <div class="ui right labeled input">
+                                    {{ entryform.sale_from() }}
+                                    <div class="ui basic label">
+                                        %
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="field">
-                        <label>Sale to</label>
-                        <div class="ui right labeled input">
-                            {{ entryform.sale_to() }}
-                            <div class="ui basic label">
-                                %
+                            <div class="field">
+                                <label>Sale to</label>
+                                <div class="ui right labeled input">
+                                    {{ entryform.sale_to() }}
+                                    <div class="ui basic label">
+                                        %
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            <div class="grouped fields">
-                <label>Promo type</label>
-                {% for field in entryform.promo_type %}
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            {{ field }}
-                            {{ field.label }}
-                        </div>
+                    
+                    <div class="grouped fields">
+                        <label>Promo type</label>
+                        {% for field in entryform.promo_type %}
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    {{ field }}
+                                    {{ field.label }}
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                    
+                    <div class="field">
+                        <label>Brand</label>
+                        {{ entryform.brand(class_="ui search dropdown") }}
+                    </div>
+                    
+                    <div class="field">
+                        <label>Repeat count</label>
+                        {{ entryform.repeat_count() }}
+                    </div>
+                </form>
             </div>
-            
-            <div class="field">
-                <label>Brand</label>
-                {{ entryform.brand(class_="ui search dropdown") }}
-            </div>
-            
-            <div class="field">
-                <label>Repeat count</label>
-                {{ entryform.repeat_count() }}
-            </div>
-        </div>
+        {% endfor %}
         
         <div class="ui button">
             <i class="download icon"></i>

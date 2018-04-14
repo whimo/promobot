@@ -62,7 +62,6 @@ def show_fit(id):
     if not fit:
         abort(404)
 
-    entry_form = EntryForm()
     superform = GetPredictForm()
 
     if superform.validate_on_submit():
@@ -71,8 +70,7 @@ def show_fit(id):
     return render_template(
         'fit.html',
         fit=fit,
-        entryform=entry_form,
-        form=superform,
+        superform=superform,
         title='Fit #' + str(fit.id)
     )
 
