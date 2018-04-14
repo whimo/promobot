@@ -72,8 +72,8 @@ _promo_types = ['Display',
 
 
 class EntryForm(FlaskForm):
-    budget_from = DecimalField()
-    budget_to = DecimalField()
+    sale_from = DecimalField()
+    sale_to = DecimalField()
     promo_type = RadioField(_promo_types[0], choices=[(t, t) for t in _promo_types])
     brand = SelectMultipleField(_brands[0], choices=[(b, b) for b in _brands])
     repeat_count = IntegerField()
