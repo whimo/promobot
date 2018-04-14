@@ -67,7 +67,9 @@ def show_fit(id):
     if superform.validate_on_submit():
         return 'OK!'
     else:
-        flash(superform.errors)
+        for _, err_list in superform.errors.items():
+            for err in err_list:
+                flash(err, 'error')
 
     return render_template(
         'fit.html',
