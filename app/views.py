@@ -15,23 +15,23 @@ def index():
         if fileform.validate_on_submit():
             real_file = fileform.file_data.data
             ext = real_file.filename.split('.')[-1]
-            
+
             if ext in ['xls', 'xlsx']:
                 csv = pandas.read_excel(real_file.stream).to_csv()
-            
+
             elif ext in ['csv']:
                 csv = real_file.stream.read()
 
             else:
                 flash('Unrecognized document notation')
                 return redirect(url_for('index'))
-            
+
             fit = Fit(filename=str(uuid4()) + '.csv', done=False)
             db.session.add(fit)
-            db.session.commnit()
-            
+            db.session.commit()
+
             s3.put_object(Body=csv, Bucket='***REMOVED***', Key='csv/' + fit.filename)
-            
+
             flash('Successfully uploaded your fit!')
             return redirect(url_for('index'))
 
@@ -61,9 +61,15 @@ def show_fit(id):
     if not fit:
         abort(404)
 
+    superform = GetPredictForm()
+
+    if superform.validate_on_submit():
+        return 'OK!'
+
     return render_template(
         'fit.html',
         fit=fit,
+        form=superform,
         title='Fit #' + str(fit.id)
     )
 
