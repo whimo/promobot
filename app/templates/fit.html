@@ -9,6 +9,24 @@
         
         <div class="ui bottom-padded"></div>
         
+        <script src="../static/js/dropdown-init.js"></script>
+        
+        <form class="ui form">
+            <label>Budget from - to</label>
+            {{ entryform.budget_from() }} - {{ entryform.budget_to() }}<br>
+            
+            <label>Promo type</label>
+            {{ entryform.promo_type() }}<br>
+            
+            <label>Brand</label>
+            <div class="field">
+                {{ entryform.brand(class_="ui search dropdown") }}
+            </div>
+            
+            <label>Repeat count</label>
+            {{ entryform.repeat_count() }}<br>
+        </div>
+        
         <div class="ui button">
             <i class="download icon"></i>
             Download results

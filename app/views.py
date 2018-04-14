@@ -1,7 +1,7 @@
 from . import app
 from flask import render_template, redirect, url_for, flash, request, abort
 from .models import Fit
-from .forms import DataForm, FitSearchForm
+from .forms import DataForm, FitSearchForm, EntryForm
 from uuid import uuid4
 
 
@@ -40,9 +40,12 @@ def show_fit(id):
     if not fit:
         abort(404)
 
+    entry_form = EntryForm()
+
     return render_template(
         'fit.html',
         fit=fit,
+        entryform=entry_form,
         title='Fit #' + str(fit.id)
     )
 
