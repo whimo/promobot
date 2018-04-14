@@ -12,11 +12,41 @@
         <script src="../static/js/dropdown-init.js"></script>
         
         <form class="ui form">
-            <label>Budget from - to</label>
-            {{ entryform.budget_from() }} - {{ entryform.budget_to() }}<br>
+            <div class="field">
+                <div class="two fields">
+                    <div class="field">
+                        <label>Sale from</label>
+                        <div class="ui right labeled input">
+                            {{ entryform.sale_from() }}
+                            <div class="ui basic label">
+                                %
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Sale to</label>
+                        <div class="ui right labeled input">
+                            {{ entryform.sale_to() }}
+                            <div class="ui basic label">
+                                %
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
-            <label>Promo type</label>
-            {{ entryform.promo_type() }}<br>
+            <div class="grouped fields">
+                <label>Promo type</label>
+                {% for field in entryform.promo_type %}
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            {{ field }}
+                            {{ field.label }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
             
             <label>Brand</label>
             <div class="field">
