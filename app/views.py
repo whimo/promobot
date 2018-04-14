@@ -8,6 +8,7 @@ import pandas
 from io import StringIO
 from threading import Thread
 from .core import PromoGenerator
+import os
 
 def save_and_fit(filename):
     new_fit = Fit(filename='', done=False, error='')
@@ -19,7 +20,11 @@ def save_and_fit(filename):
 
 
     # Pickle PromoGenerator
-    #model = gen.
+    model = gen.model
+    model.save_model('tmp_file.cb_model')
+    s3.upload_file(Filename='tmp_file.cb_model', Bucket='just-a-name', Key='models/' + str(new_fit.id))
+    os.remove('tmp_file.cb_model')
+    
 
 
 @app.route('/', methods=['GET', 'POST'])
