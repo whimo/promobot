@@ -48,13 +48,15 @@
                 {% endfor %}
             </div>
             
-            <label>Brand</label>
             <div class="field">
+                <label>Brand</label>
                 {{ entryform.brand(class_="ui search dropdown") }}
             </div>
             
-            <label>Repeat count</label>
-            {{ entryform.repeat_count() }}<br>
+            <div class="field">
+                <label>Repeat count</label>
+                {{ entryform.repeat_count() }}
+            </div>
         </div>
         
         <div class="ui button">
