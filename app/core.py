@@ -4,6 +4,8 @@ import pandas
 import string
 from datetime import datetime
 
+from catboost import CatBoostRegressor
+
 FEATURE_COLUMNS = ['period_start_date', 'period_end_date', 'period', 'discount',
                    'category', 'brand', 'line_up', 'type_of_promo', 'total_promo_cost',
                    'ivolume', 'base_volume_it']
@@ -26,6 +28,14 @@ PERIOD_DURATION = 13.0
 
 NUMERICAL = ('total_promo_cost', 'ivolume')
 CATEGORICAL_FEATURES = ['category', 'brand', 'line_up', 'period']
+
+
+REGRESSION_PARAMS = {'depth': 4,
+                     'iterations': 90,
+                     'learning_rate': 0.15,
+                     'logging_level': 'Silent',
+                     'loss_function': 'RMSE',
+                     'verbose': 0}
 
 
 def prettify_str(s):
@@ -59,9 +69,20 @@ class PromoGenerator(object):
     def __init__(self):
         self.raw_data = None
         self.data = None
+        self.target = None
+        self.error = None
+        self.model = None
 
     def fit(self, data):
-        pass
+        self.raw_data = data.copy()
+        self.data = data
+        if not self.prepare_data():
+            self.error = 'Invalid data provided'
+            return -1
+
+        self.model = CatBoostRegressor(**REGRESSION_PARAMS)
+        cat_indexes = [list(self.data.keys()).index(i) for i in CATEGORICAL_FEATURES]
+        self.model.fit(self.data.as_matrix(), self.target, cat_features=cat_indexes)
 
     def prepare_data(self):
         self.data = generate_target(self.data)
@@ -90,5 +111,7 @@ class PromoGenerator(object):
                     self.data.loc[index, NUMERICAL] *= (PERIOD_DURATION / value)
 
         self.data = generate_new_features(self.data)
-        self.target = self.data[TARGET_COLUMN]
+        self.target = self.data[TARGET_COLUMN].values
         self.data = self.data.drop(TODROP, axis=1)
+
+        return True
