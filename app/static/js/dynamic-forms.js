@@ -5,7 +5,7 @@ $(document).ready(function(){
     let $remove_button = $("#remove_form");
 
     const min_entries = 1;
-    let current_entries = $append_div.children().length - 1;
+    let current_entries = $append_div.children().length;
 
     if (current_entries == min_entries)
         $remove_button.addClass("disabled");
