@@ -24,11 +24,16 @@
                 {% endfor %}
             </div>
             
+            <div class="field">
+                <label>Promo budget</label>
+                {{ superform.promo_budget }}
+            </div>
+            
             <div class="ui icon primary button field">
                 <i class="plus icon"></i>
             </div>
             
-            <h2 style="display: inline;">&nbsp;1&nbsp;</h2>
+            <h2 style="display: inline;">&nbsp;{{ superform.per_entry_params.last_index + 1 }}&nbsp;</h2>
             
             <div class="ui icon primary button field">
                 <i class="minus icon"></i>
