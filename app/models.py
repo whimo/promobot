@@ -10,7 +10,7 @@ class Fit(db.Model):
     def status(self):
         if self.done:
             return 'OK'
-        elif self.error == '':
+        elif not self.error:
             return 'WAIT'
         else:
             return self.error
