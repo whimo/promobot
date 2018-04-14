@@ -9,22 +9,30 @@ from io import StringIO
 from threading import Thread
 from .core import PromoGenerator
 import os
+import time
 
-def save_and_fit(filename):
-    new_fit = Fit(filename='', done=False, error='')
-    gen = PromoGenerator()
-    data = s3.get_object('***REMOVED***', filename).read()
-    sio = StringIO(data.decode('utf-8'))
-    if gen.fit(pd.read_csv(sio)) == -1:
-        new_fit.error = gen.error
+def save_and_fit(fit):
+    with app.app_context():
+        print('request at ', time.time())
+        gen = PromoGenerator()
+        data = s3.get_object(Bucket='***REMOVED***', Key='csv/' + fit.filename)['Body'].read()
+        sio = StringIO(data.decode('utf-8'))
+        if gen.fit(pandas.read_csv(sio)) == -1:
+            fit.error = gen.error
+            return
 
 
-    # Pickle PromoGenerator
-    model = gen.model
-    model.save_model('tmp_file.cb_model')
-    s3.upload_file(Filename='tmp_file.cb_model', Bucket='***REMOVED***', Key='models/' + str(new_fit.id))
-    os.remove('tmp_file.cb_model')
-    
+        # Pickle PromoGenerator
+        model = gen.model
+        model.save_model('tmp_file.cb_model')
+        s3.upload_file(Filename='tmp_file.cb_model', Bucket='***REMOVED***', Key='models/' + str(fit.id))
+        os.remove('tmp_file.cb_model')
+        fit.done = True
+        db.session.add(fit)
+        db.session.commit()
+        print(fit.done)
+        print()
+        print('end at ', time.time())
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -54,6 +62,10 @@ def index():
             s3.put_object(Body=csv, Bucket='***REMOVED***', Key='csv/' + fit.filename)
 
             flash('Successfully uploaded your fit! ID: ' + str(fit.id))
+
+            trd = Thread(target=save_and_fit, args=(fit,))
+            trd.start()
+
             return redirect(url_for('show_fit', id=fit.id))
 
         else:
@@ -94,7 +106,14 @@ def show_fit(id):
             ent['sale_to'] = float(ent['sale_to']) / 100.0
             ent['repeat_count'] = int(ent['repeat_count'])
 
-        flash('ok')
+        s3.download_file(Bucket='***REMOVED***', Key='models/' + str(id), Filename='tmp_file.cb_model')
+        reg = CatBoostRegressor().load_file(fname='tmp_file.cb_model')
+        os.remove('tmp_file.cb_model')
+
+        gen = PromoGenerator()
+        gen.model = reg
+
+        return gen.predict_for(dat)
     else:
         for _, err_list in superform.errors.items():
             for err in err_list:
