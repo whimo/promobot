@@ -13,14 +13,12 @@ import time
 
 def save_and_fit(fit):
     with app.app_context():
-        print('request at ', time.time())
         gen = PromoGenerator()
         data = s3.get_object(Bucket='just-a-name', Key='csv/' + fit.filename)['Body'].read()
         sio = StringIO(data.decode('utf-8'))
         if gen.fit(pandas.read_csv(sio)) == -1:
             fit.error = gen.error
             return
-
 
         # Pickle PromoGenerator
         model = gen.model
@@ -30,10 +28,6 @@ def save_and_fit(fit):
         fit.done = True
         db.session.add(fit)
         db.session.commit()
-        print(fit.done)
-        print()
-        print('end at ', time.time())
-
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
